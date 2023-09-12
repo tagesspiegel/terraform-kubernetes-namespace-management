@@ -1,42 +1,41 @@
-# terraform-module-template
+# Namespace Management
 
-A template repository to provide a basic setup for Terraform modules.
+This module creates namespaces from a map and uses rolebindings to manage permissions. The permissions.admins and
+permissions.devs lists should contain names of existing groups.
 
-## Module structure
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
-The module structure is based on the [Terraform module documentation](https://www.terraform.io/docs/modules/index.html#standard-module-structure). The following tree shows the structure of the module.
+| Name | Version |
+|------|---------|
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | 2.20.0 |
 
-```txt
-├── .gitignore
-├── LICENSE
-├── README.md
-├── docs
-│ └── README.md
-├── examples
-│ ├── complete
-│ │ ├── main.tf
-│ │ ├── outputs.tf
-│ │ ├── variables.tf
-│ │ └── versions.tf
-│ ├── minimal
-│ │ ├── main.tf
-│ │ ├── outputs.tf
-│ │ ├── variables.tf
-│ │ └── versions.tf
-├── main.tf
-├── outputs.tf
-├── variables.tf
-└── versions.tf
-```
+## Providers
 
-## Working with this template
+| Name | Version |
+|------|---------|
+| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.20.0 |
 
-In order to use this template, you can use the GitHub template feature. This will create a new repository based on this template. After that, you can clone the repository and start working on it.
+## Modules
 
-### Creating a new repository based on this template
+No modules.
 
-To get started with this template, you have to navigate https://github.com/new and select the Tagesspiegel organization. After that, you can select the `terraform-module-template` repository, enter a name for your new repository and click on `Create repository`. Please note that you have to define a name for your new repository that is not already taken and follows the naming conventions (`terraform-<provider>-<name>`).
+## Resources
 
-![Create GitHub repository based on template](docs/github_create_repository.png)
+| Name | Type |
+|------|------|
+| [kubernetes_namespace_v1.this](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/namespace_v1) | resource |
+| [kubernetes_role_binding.admins](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/role_binding) | resource |
+| [kubernetes_role_binding.devs](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/role_binding) | resource |
 
-If everything worked as expected, you should now have a new repository based on this template. You can now clone the repository and start working on it.
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_namespaces"></a> [namespaces](#input\_namespaces) | A map of namespaces with their metadata and permissions. | <pre>map(object({<br>    labels = map(string)<br>    permissions = object({<br>      admins = list(string)<br>      devs   = list(string)<br>    })<br>  }))</pre> | n/a | yes |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
+
