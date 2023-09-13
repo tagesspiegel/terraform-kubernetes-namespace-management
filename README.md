@@ -3,6 +3,10 @@
 This module creates namespaces from a map and uses rolebindings to manage permissions. The permissions.admins and
 permissions.devs lists should contain names of existing groups.
 
+## Examples
+
+[Complete Example](./examples/complete/main.tf)
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
@@ -12,27 +16,23 @@ permissions.devs lists should contain names of existing groups.
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | 2.20.0 |
+No providers.
 
 ## Modules
 
-No modules.
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_namespace"></a> [namespace](#module\_namespace) | ./modules/namespace | n/a |
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [kubernetes_namespace_v1.this](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/namespace_v1) | resource |
-| [kubernetes_role_binding.admins](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/role_binding) | resource |
-| [kubernetes_role_binding.devs](https://registry.terraform.io/providers/hashicorp/kubernetes/2.20.0/docs/resources/role_binding) | resource |
+No resources.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_namespaces"></a> [namespaces](#input\_namespaces) | A map of namespaces with their metadata and permissions. | <pre>map(object({<br>    labels = map(string)<br>    permissions = object({<br>      admins = list(string)<br>      devs   = list(string)<br>    })<br>  }))</pre> | n/a | yes |
+| <a name="input_namespaces"></a> [namespaces](#input\_namespaces) | A map of namespaces with their metadata and permissions. | <pre>map(object({<br>    labels = map(string)<br>    permissions = list(object({<br>      role_ref = object({<br>        kind      = string<br>        name      = string<br>        api_group = string<br>      })<br>      subjects = list(object({<br>        kind      = string<br>        name      = string<br>        api_group = string<br>      }))<br>    }))<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
